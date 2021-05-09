@@ -41,10 +41,11 @@ var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Me
 var connectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
     opts := client.OptionsReader()
     fmt.Printf("Connected to %s\n", opts.Servers()[0].String())
+    sub(client, morseDirections)
 }
 
 var connectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err error) {
-    fmt.Printf("Connect lost: %v", err)
+    fmt.Printf("Connect lost: %v\n", err)
 }
 
 func main() {
@@ -75,18 +76,11 @@ func main() {
         panic(token.Error())
     }
 
-    sub(client, morseDirections)
-
-    for {
-        if !client.IsConnectionOpen() {
-            fmt.Println("bye")
-            client.Disconnect(250)
-        }
-    }
+    for {}
 }
 
 func sub(client mqtt.Client, topic string) {
     token := client.Subscribe(topic, 2, nil)
     token.Wait()
-    fmt.Printf("Subscribed to topic: %s", topic)
+    fmt.Printf("Subscribed to topic: %s\n", topic)
 }
