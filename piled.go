@@ -6,7 +6,7 @@ import (
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
-	"github.com/stianeikeland/go-rpio"
+	rpio "github.com/stianeikeland/go-rpio"
 )
 
 var (
